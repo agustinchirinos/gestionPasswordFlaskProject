@@ -41,7 +41,7 @@ class Usuario(db.Model):
         # self.password = generate_password_hash(password, method='pbkdf2:sha512')
         method = "pbkdf2:sha256:260000"
         # method = "plain"
-        # method = "pbkdf2:sha512:1000000"
+        # method = "pbkdf2:sha512:10000000"
         self.password = generate_password_hash(password,method=method) #Por defecto sha256
         # self.password = password.split("$", 1)[1]
 
