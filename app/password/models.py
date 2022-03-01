@@ -49,3 +49,5 @@ class Usuario(db.Model):
     def check_password(self, password):
         # passHash = 'pbkdf2:sha256:260000$' + self.password
         return check_password_hash(self.password, password)
+
+

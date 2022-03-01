@@ -123,10 +123,32 @@ def loginhasheado():
 def hasheadapeeper():
     error = ""
     form = UsuarioForm(request.form)
+    if form.validate_on_submit():
+        try:
+            usuario = Usuario()
+            usuario.username = form.username.data
+            password = PEEPER + form.password.data
+            usuario.set_password(password)
+            usuario.nombre = form.nombre.data
+            usuario.apellidos = form.apellidos.data
+            usuario.dni = form.dni.data
+            usuario.create()
+            return redirect(url_for('password.loginhasheadopeeper'))
+        except Exception as e:
+            error = "No se ha podido dar de alta " + e.__str__()
     return render_template("hasheadapeeper.html", form=form, error=error)
 
 @password.route("/loginhasheadopeeper/", methods=["GET","POST"])
 def loginhasheadopeeper():
     error = ""
     form = LoginForm(request.form)
+    if form.validate_on_submit():
+        username = form.username.data
+        password = PEEPER + form.password.data
+        usuario = Usuario.get_by_username(username)
+
+        if usuario and usuario.check_password(password):
+            return redirect(url_for("password.welcome"))
+        else:
+            error = "Usuario y/o contraseña incorrecta"
     return render_template("loginhasheadopeeper.html", form=form, error=error)
